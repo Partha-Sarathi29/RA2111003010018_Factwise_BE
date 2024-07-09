@@ -1,0 +1,41 @@
+def number_to_words(n):
+    # Define words for numbers 1 to 19
+    ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+            "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+            "seventeen", "eighteen", "nineteen"]
+    
+    # Define words for tens multiples (20, 30, ..., 90)
+    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+    
+    if n == 1000:
+        return "one thousand"
+    
+    words = ""
+    
+    # Handle hundreds place
+    if n >= 100:
+        words += ones[n // 100] + " hundred"
+        if n % 100 == 0:
+            return words.strip()
+        else:
+            words += " and "
+            n %= 100
+    
+    # Handle tens and ones place
+    if n < 20:
+        words += ones[n]
+    else:
+        words += tens[n // 10]
+        if n % 10 != 0:
+            words += " " + ones[n % 10]
+    
+    return words.strip()
+
+# Calculate total letters used from 1 to 1000
+total_letters = 0
+for number in range(1, 1001):
+    words = number_to_words(number)
+    # Count letters excluding spaces and hyphens
+    total_letters += len(words.replace(" ", "").replace("-", ""))
+
+print("Total letters used:", total_letters)
